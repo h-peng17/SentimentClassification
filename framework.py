@@ -193,7 +193,7 @@ class Test():
         self.correct += (batch["label"] == output).sum()
         self.total += len(batch["label"])
 
-        return logit, batch["label"]
+        return logit, output
     
     def test(self):
         print("begin testing....")
@@ -210,33 +210,18 @@ class Test():
             self.correct = 0
             self.total = 0 
             self.result = []
-            self.total_recall = 0
             for i in range(int(len(test_order) / self.config.batch_size)):
-                logit, label = self.test_one_step()
+                logit, output = self.test_one_step()
                 sys.stdout.write("epoch:{}, batch:{} acc:{}\r".format(epoch, i, round(self.correct / self.total, 6)))
                 sys.stdout.flush()
+                self.result.extend(output)
+            
+            label = test_data_loader.label.tolist()
+            f1 = metrics.f1_score(label, self.result)
+            print("F1: {}".format(f1))
 
-                logit = np.array((logit.cpu()).detach())
-                logit = logit.tolist()
-                for i in range(len(logit)):
-                    for j in range(self.config.mood_total):
-                        if j == label[i]:
-                            self.result.append([logit[i][j], 1])
-                        else:
-                            self.result.append([logit[i][j], 0])
-                self.total_recall += len(logit)
 
-            self.result.sort(key = lambda x:x[0], reverse = True)
-            correct = 0
-            pr_x_recall = []
-            pr_y_precision = []
-            for i, item in enumerate(self.result):
-                if item[1] == 1:
-                    correct += 1
-                pr_x_recall.append(correct / self.total_recall)
-                pr_y_precision.append(correct / (i + 1))
-            auc = metrics.auc(x = pr_x_recall, y = pr_y_precision)
-            print("auc: {}".format(auc))
+
             
 
 parser = OptionParser()

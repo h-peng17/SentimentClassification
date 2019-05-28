@@ -3,6 +3,7 @@ import os
 import json
 import parser
 import numpy as np 
+import sys
 
 
 class Gendata():

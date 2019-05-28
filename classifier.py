@@ -14,7 +14,7 @@ class Classifier(nn.Module):
         self.dropout = nn.Dropout(config.drop_rate)
         self.label = None
         weight_tabel = torch.from_numpy(weight_tabel).to(torch.float32).cuda()
-        self.loss = nn.CrossEntropyLoss()
+        self.loss = nn.CrossEntropyLoss(weight=weight_tabel)
 
     def logit(self, x):
         # x [B, H]

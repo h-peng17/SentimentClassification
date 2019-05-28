@@ -12,7 +12,7 @@ class CNN(nn.Module):
         self.kernel_size = config.kernel_size
         self.cnn1 = nn.Conv1d(self.in_channels, self.out_channels, 7, padding = int((7-1) / 2))
         self.cnn2 = nn.Conv1d(config.hidden_size, config.hidden_size, 5, padding = int((5-1) / 2))
-        self.cnn3 = nn.Conv1d(config.hidden_size, config.hidden_size, 3, padd    ing = int((3-1) / 2))
+        self.cnn3 = nn.Conv1d(config.hidden_size, config.hidden_size, 3, padding = int((3-1) / 2))
         nn.init.xavier_normal_(self.cnn1.weight)
         nn.init.xavier_normal_(self.cnn2.weight)
         self.activation = nn.ReLU()

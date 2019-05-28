@@ -244,7 +244,7 @@ if options.mode == 'train':
     print(ckpt_dir)
 
     train = Train(train_data_loader, dev_data_loader, ckpt_dir, config)
-    train.init_train(Model(config), options.optimizer)
+    train.init_train(Model(config), options.optimer)
     train.train()
 
     test_data_loader = Data_loader("test")

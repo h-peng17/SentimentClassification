@@ -41,7 +41,7 @@ class Gendata():
             total += 1
         f.close()
         f = open("../original_data/sinanews.{}".format(mode), encoding = 'utf8')
-        data_word = np.zeros(shape = [total, 240], dtype = np.int32)
+        data_word = np.zeros(shape = [total, 3000], dtype = np.int32)
         data_label = np.zeros(shape = [total], dtype = np.int32)
         data_length = np.zeros(shape = [total], dtype = np.int32)
         for i in range(total):

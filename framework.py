@@ -193,7 +193,7 @@ class Test():
         self.correct += (batch["label"] == output).sum()
         self.total += len(batch["label"])
 
-        return logit, output
+        return batch["label"], output
     
     def test(self):
         print("begin testing....")
@@ -210,14 +210,16 @@ class Test():
             self.correct = 0
             self.total = 0 
             self.result = []
+            self.label = []
             for i in range(int(len(test_order) / self.config.batch_size)):
-                logit, output = self.test_one_step()
+                label, output = self.test_one_step()
                 sys.stdout.write("epoch:{}, batch:{} acc:{}\r".format(epoch, i, round(self.correct / self.total, 6)))
                 sys.stdout.flush()
                 self.result.extend(output)
+                self.label.extend(label.tolist())
             
-            label = test_data_loader.label.tolist()
-            f1 = metrics.f1_score(label, self.result)
+        
+            f1 = metrics.f1_score(self.label, self.result)
             print("F1: {}".format(f1))
 
 

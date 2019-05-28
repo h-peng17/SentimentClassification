@@ -122,8 +122,10 @@ class Train():
             batch = self.dev_data_loader.next(self.config.batch_size)
             self.train_model.embedding.word = self.to_var(batch["word"])
             self.train_model.classifier.label = self.to_var(batch["label"])
+            
             loss = -1 
-        
+            output, logit = self.train_model.test()
+            
         output = np.array(((output.cpu()).detach()))
         # pdb.set_trace()
 

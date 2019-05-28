@@ -260,7 +260,7 @@ config.set_drop_rate(float(options.droprate))
 
 if options.mode == 'train':
     train_data_loader = Data_loader("train", config)
-    dev_data_loader = Data_loader("test", config)
+    dev_data_loader = Data_loader("train", config)
     ckpt_dir = '../' + options.model_name + '-'+ options.lr + '-' + options.weight_decay + '-' + options.droprate
     print(ckpt_dir)
 
@@ -268,7 +268,7 @@ if options.mode == 'train':
     train.init_train(Model(config, train_data_loader.weight_tabel), options.optimer)
     train.train()
 
-    test_data_loader = Data_loader("test", config)
+    test_data_loader = Data_loader("train", config)
     test = Test(test_data_loader, ckpt_dir, config)
     test.init_test(Model(config, test_data_loader.weight_tabel))
     test.test()

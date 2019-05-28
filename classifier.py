@@ -11,7 +11,7 @@ class Classifier(nn.Module):
         nn.init.uniform_(self.bias)
 
         self.config = config
-        self.dropout = nn.Dropout(config.droprate)
+        self.dropout = nn.Dropout(config.drop_rate)
         self.label = None
         self.loss = nn.CrossEntropyLoss()
 

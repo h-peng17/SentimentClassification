@@ -73,6 +73,11 @@ class Gendata():
         np.save("../data/{}_word.npy".format(mode), data_word)
         np.save("../data/{}_label.npy".format(mode), data_label)
 
-        
+if not os.path.exists("../data"):
+    os.mkdir("../data")
+
+gen = Gendata()
+gen.process_vec()
+gen.process_data(sys.argv[1])
 
 

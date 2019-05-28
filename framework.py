@@ -47,7 +47,7 @@ class Config():
         self.mood_total = _config["mood_total"]
         self.embedding_size = 50
         self.hidden_size = 2048
-        self.hidden_size2 = 2048
+        self.hidden_size2 = 4096
         self.kernel_size = 3
         self.drop_rate = 0.5 
         self.lr = 0.001
@@ -55,7 +55,7 @@ class Config():
         self.weight_decay = 0
         self.max_epoch = 20
         self.dev_step = 5
-        self.batch_size = 64
+        self.batch_size = 20
         self.save_epoch = 1
         self.model_name = "CNN"
     

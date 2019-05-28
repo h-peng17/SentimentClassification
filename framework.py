@@ -79,6 +79,8 @@ class Config():
     def set_dev_step(self, dev_step):
         self.dev_step = dev_step
     
+    def set_drop_rate(self, drop_rate):
+        self.drop_rate = drop_rate
 
 
 
@@ -219,7 +221,8 @@ parser.add_option('--gpu', dest='gpu',default=5,help='gpu id for running')
 parser.add_option('--mode',dest='mode',default='train',help='to train or to test')
 parser.add_option('--lr',dest='lr',default=0.5,help='learning rate')
 parser.add_option('--hs',dest='hidden_size',default=230,help='hidden size')
-parser.add_option('--keeprate',dest='keeprate',default=0.5,help='keep rate')
+parser.add_option('--droprate',dest='droprate',default=0.7,help='keep rate')
+parser.add_option('--weight_decay',dest='weight_decay',default=1e-5,help='keep rate')
 parser.add_option('--max_epoch',dest='max_epoch',default=20,help='max epoch')
 parser.add_option('--optimer',dest='optimer',default='SGD',help='optimizer for training')
 parser.add_option('--dev_step',dest='dev_step',default=5,help='steps for dev')
@@ -240,6 +243,8 @@ config.set_dev_step(int(options.dev_step))
 config.set_model_name(options.model_name)
 config.set_max_epoch(int(options.max_epoch))
 config.set_batch_size(int(options.batch_size))
+config.set_weight_decay(float(options.weight_decay))
+config.set_drop_rate(float(options.droprate))
 
 if options.mode == 'train':
     train_data_loader = Data_loader("train", config)

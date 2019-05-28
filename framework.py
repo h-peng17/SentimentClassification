@@ -47,6 +47,7 @@ class Config():
         self.mood_total = _config["mood_total"]
         self.embedding_size = 50
         self.hidden_size = 230
+        self.hidden_size2 = 1024
         self.kernel_size = 3
         self.drop_rate = 0.5 
         self.lr = 0.5
@@ -100,7 +101,7 @@ class Train():
 
         print("wash parameters...")
         parameters_to_optimize = filter(lambda x: x.requires_grad, self.train_model.parameters())
-        self.optimizer = optim.SGD(parameters_to_optimize, lr = self.config.lr, weight_decay = self.config.weight_decay)
+        self.optimizer = optim.Adam(parameters_to_optimize, lr = self.config.lr, weight_decay = self.config.weight_decay)
 
         print("finish init")
 
@@ -230,7 +231,7 @@ parser = OptionParser()
 parser.add_option('--model_name', dest='model_name',default='CNN',help='model name')
 parser.add_option('--gpu', dest='gpu',default=5,help='gpu id for running')
 parser.add_option('--mode',dest='mode',default='train',help='to train or to test')
-parser.add_option('--lr',dest='lr',default=0.5,help='learning rate')
+parser.add_option('--lr',dest='lr',default=0.001,help='learning rate')
 parser.add_option('--hs',dest='hidden_size',default=230,help='hidden size')
 parser.add_option('--droprate',dest='droprate',default=0.7,help='keep rate')
 parser.add_option('--weight_decay',dest='weight_decay',default=1e-5,help='keep rate')

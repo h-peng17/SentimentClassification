@@ -46,8 +46,8 @@ class Config():
         self.sen_len = _config["sen_len"]
         self.mood_total = _config["mood_total"]
         self.embedding_size = 100
-        self.hidden_size = 4096
-        self.hidden_size2 = 4096
+        self.hidden_size = 230
+        self.hidden_size2 = 230
         self.kernel_size = 3
         self.drop_rate = 0.5 
         self.lr = 0.001

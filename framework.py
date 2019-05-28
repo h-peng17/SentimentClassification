@@ -125,7 +125,7 @@ class Train():
             
             loss = -1 
             output, logit = self.train_model.test()
-            
+
         output = np.array(((output.cpu()).detach()))
         # pdb.set_trace()
 
@@ -173,8 +173,7 @@ class Test():
         self.total = 0
     
     def init_test(self, model):
-        print("Initialize train model...") 
-        print("optimizer:"+optimizer)
+        print("Initialize test model...") 
         print('lr:{}'.format(self.config.lr))
         self.test_model = model
         self.test_model.cuda()

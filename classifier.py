@@ -5,7 +5,7 @@ import torch.nn as nn
 class Classifier(nn.Module):
     def __init__(self, config, weight_tabel = None):
         super(Classifier, self).__init__()
-        self.mood_matrix = nn.Embedding(config.mood_total, config.hidden_size)
+        self.mood_matrix = nn.Embedding(config.mood_total, config.hidden_size2)
         self.bias = nn.Parameter(torch.randn(config.mood_total))
         nn.init.xavier_uniform_(self.mood_matrix.weight)
         nn.init.uniform_(self.bias)

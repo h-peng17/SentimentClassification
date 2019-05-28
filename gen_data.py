@@ -7,10 +7,10 @@ import sys
 
 
 class Gendata():
-    def __init__(self):
+    def __init__(self, MAX):
         self.word2id = {}
         self.mood2id = {}
-        self.MAX = 1500
+        self.MAX = MAX
          
     def process_vec(self):
         f = open("../original_data/sinanews.train", encoding='utf8')
@@ -83,7 +83,7 @@ class Gendata():
 if not os.path.exists("../data"):
     os.mkdir("../data")
 
-gen = Gendata()
+gen = Gendata(int(sys.argv[2]))
 gen.process_vec()
 gen.process_data(sys.argv[1])
 

@@ -219,7 +219,7 @@ class Test():
                 self.label.extend(label.tolist())
             
         
-            f1 = metrics.f1_score(self.label, self.result, average='micro')
+            f1 = metrics.f1_score(self.label, self.result, average='macro')
             print("F1: {}".format(f1))
 
 

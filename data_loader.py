@@ -9,7 +9,7 @@ class Data_loader():
         self.label = np.load("../data/{}_label.npy".format(mode))
 
         self.total = len(self.word)
-        self.order = range(self.total)
+        self.order = list(range(self.total))
         self.lef = 0
         self.rig = 0
         self.idx = 0

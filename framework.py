@@ -15,14 +15,14 @@ import pdb
 
 
 class Model(nn.Module):
-    def __init__(self, config):
+    def __init__(self, config, weight_tabel = None):
         super(Model, self).__init__()
         self.embedding = Embedding(config)
         if config.model_name == "CNN":
             self.encoder = CNN(config)
         elif config.model_name == 'RNN':
             self.encoder = RNN(config)
-        self.classifier = Classifier(config)
+        self.classifier = Classifier(config, weight_tabel)
 
     def forward(self):
         embedding = self.embedding()
@@ -242,16 +242,16 @@ config.set_max_epoch(int(options.max_epoch))
 config.set_batch_size(int(options.batch_size))
 
 if options.mode == 'train':
-    train_data_loader = Data_loader("train")
-    dev_data_loader = Data_loader("test")
+    train_data_loader = Data_loader("train", config)
+    dev_data_loader = Data_loader("test", config)
     ckpt_dir = '../' + options.model_name + '-'+ str(options.lr)
     print(ckpt_dir)
 
     train = Train(train_data_loader, dev_data_loader, ckpt_dir, config)
-    train.init_train(Model(config), options.optimer)
+    train.init_train(Model(config, train_data_loader.weight_tabel), options.optimer)
     train.train()
 
-    test_data_loader = Data_loader("test")
+    test_data_loader = Data_loader("test", config)
     test = Test(test_data_loader, ckpt_dir, config)
     test.init_test(Model(config))
     test.test()
@@ -260,7 +260,7 @@ else:
     ckpt_dir = '../' + options.model_name + '-'+ str(options.lr)
     print(ckpt_dir)
 
-    test_data_loader = Data_loader("test")
+    test_data_loader = Data_loader("test", config)
     test = Test(test_data_loader, ckpt_dir, config)
     test.init_test(Model(config))
     test.test()

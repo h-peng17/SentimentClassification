@@ -3,7 +3,7 @@ import torch
 import torch.nn as nn 
 
 class Classifier(nn.Module):
-    def __init__(self, config):
+    def __init__(self, config, weight_tabel = None):
         super(Classifier, self).__init__()
         self.mood_matrix = nn.Embedding(config.mood_total, config.hidden_size)
         self.bias = nn.Parameter(torch.randn(config.mood_total))
@@ -13,7 +13,8 @@ class Classifier(nn.Module):
         self.config = config
         self.dropout = nn.Dropout(config.drop_rate)
         self.label = None
-        self.loss = nn.CrossEntropyLoss()
+        weight_tabel = torch.from_numpy(weight_tabel).to(torch.float32).cuda()
+        self.loss = nn.CrossEntropyLoss(weight=weight_tabel)
 
     def logit(self, x):
         # x [B, H]

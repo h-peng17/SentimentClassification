@@ -47,7 +47,7 @@ class Config():
     def __init__(self, _config):
         self.word_total = _config["word_total"]
         self.sen_len = _config["sen_len"]
-        self.mool_total = _config["mood_total"]
+        self.mood_total = _config["mood_total"]
         self.embedding_size = 50
         self.hidden_size = 230
         self.kernel_size = 3

@@ -45,7 +45,7 @@ class Config():
         self.word_total = _config["word_total"]
         self.sen_len = _config["sen_len"]
         self.mood_total = _config["mood_total"]
-        self.embedding_size = 50
+        self.embedding_size = 300
         self.hidden_size = 230
         self.hidden_size2 = 230
         self.kernel_size = 3

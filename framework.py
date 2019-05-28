@@ -268,7 +268,7 @@ if options.mode == 'train':
     train.init_train(Model(config, train_data_loader.weight_tabel), options.optimer)
     train.train()
 
-    test_data_loader = Data_loader("train", config)
+    test_data_loader = Data_loader("test", config)
     test = Test(test_data_loader, ckpt_dir, config)
     test.init_test(Model(config, test_data_loader.weight_tabel))
     test.test()

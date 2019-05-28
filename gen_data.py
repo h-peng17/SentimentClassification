@@ -10,7 +10,7 @@ class Gendata():
     def __init__(self):
         self.word2id = {}
         self.mood2id = {}
-        self.MAX = 240
+        self.MAX = 1500
          
     def process_vec(self):
         f = open("../original_data/sinanews.train", encoding='utf8')
@@ -31,7 +31,7 @@ class Gendata():
                 if word not in self.word2id:
                     self.word2id[word] = len(self.word2id)
 
-    def process_data(self, mode):
+    def process_data(self, mode, ):
         f = open("../original_data/sinanews.{}".format(mode), encoding = 'utf8')
         total = 0
         while True:
@@ -41,7 +41,7 @@ class Gendata():
             total += 1
         f.close()
         f = open("../original_data/sinanews.{}".format(mode), encoding = 'utf8')
-        data_word = np.zeros(shape = [total, 3000], dtype = np.int32)
+        data_word = np.zeros(shape = [total, MAX], dtype = np.int32)
         data_label = np.zeros(shape = [total], dtype = np.int32)
         data_length = np.zeros(shape = [total], dtype = np.int32)
         for i in range(total):

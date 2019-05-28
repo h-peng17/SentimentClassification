@@ -102,6 +102,8 @@ class Train():
         parameters_to_optimize = filter(lambda x:x.requires_grad, self.train_model.parameters())
         self.optimizer = optim.SGD(parameters_to_optimize, lr = self.config.lr, weight_decay = self.config.weight_decay)
 
+        print("finish init...")
+
     def to_var(self, x):
         return torch.from_numpy(x).to(torch.int64).cuda()
 
@@ -240,7 +242,7 @@ config.set_batch_size(int(options.batch_size))
 if options.mode == 'train':
     train_data_loader = Data_loader("train")
     dev_data_loader = Data_loader("test")
-    ckpt_dir = '../' + options.model_name + '-'+ str(options.lr) + '-'
+    ckpt_dir = '../' + options.model_name + '-'+ str(options.lr)
     print(ckpt_dir)
 
     train = Train(train_data_loader, dev_data_loader, ckpt_dir, config)
@@ -253,7 +255,7 @@ if options.mode == 'train':
     test.test()
 
 else:
-    ckpt_dir = '../' + options.model_name + '-'+ str(options.lr) + '-'
+    ckpt_dir = '../' + options.model_name + '-'+ str(options.lr)
     print(ckpt_dir)
 
     test_data_loader = Data_loader("test")

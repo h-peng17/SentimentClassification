@@ -49,6 +49,8 @@ class Gendata():
             moods = art[1].split()[1:]
             sen = art[2].split()
             for j, word in enumerate(sen):
+                if j>= self.MAX:
+                    break
                 try:
                     data_word[i][j] = self.word2id[word]
                 except:
@@ -57,6 +59,7 @@ class Gendata():
             mood_num = {}
             for mood in moods:
                 mood_num[mood[0:2]] = int(mood[3])
+            
             mood_key = ''
             num = 0
             for key in mood_num:

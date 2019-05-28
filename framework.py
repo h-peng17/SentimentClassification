@@ -156,6 +156,8 @@ class Train():
                 self.train_model.train()
             else:
                 for i in range(int(len(train_order) / self.config.batch_size)):
+                    if epoch == 98:
+                        pdb.set_trace()
                     loss, _ = self.train_one_step(True)
                     sys.stdout.write("epoch:{} batch:{} loss:{}, acc:{}\r".format(epoch, i, round(float(loss), 6), round(self.correct / self.total, 6)))
                     sys.stdout.flush()
@@ -206,7 +208,7 @@ class Test():
             path = os.path.join(self.ckpt_dir, self.config.model_name + '-' + str(epoch))
             if not os.path.exists(path):
                 continue
-            print("Start testing epoch %d" % (epoch))
+            print("Start testing epoch %d " % (epoch))
             self.test_model.load_state_dict(torch.load(path))
             self.correct = 0
             self.total = 0 

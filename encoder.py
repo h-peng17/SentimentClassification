@@ -42,7 +42,6 @@ class RNN(nn.Module):
         self.input_size = config.embedding_size
         self.hidden_size = config.hidden_size
         self.rnn = nn.LSTM(input_size = self.input_size, hidden_size = self.hidden_size)
-        nn.init.xavier_normal_(self.rnn.weight)
         self.dropout = nn.Dropout(config.drop_rate)
     
     def forward(self, x):

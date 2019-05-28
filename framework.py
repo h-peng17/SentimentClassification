@@ -105,6 +105,8 @@ class Train():
             self.optimizer = optim.Adam(parameters_to_optimize, lr = self.config.lr, weight_decay = self.config.weight_decay)
         elif optimizer == 'SGD':
             self.optimizer = optim.SGD(parameters_to_optimize, lr = self.config.lr, weight_decay = self.config.weight_decay)
+        elif optimizer == 'Adadelta':
+            self.optimizer = optim.Adadelta(parameters_to_optimize, lr = self.config.lr, weight_decay = self.config.weight_decay)
 
         print("finish init")
 

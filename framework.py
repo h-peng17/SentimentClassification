@@ -226,7 +226,7 @@ os.environ["CUDA_VISIBLE_DEVICES"] = str(options.gpu)
 
 
 # load config
-f = open(os.path.join(options.data_path, "config.json"),'r')
+f = open(os.path.join('../data', "config.json"),'r')
 conf = json.load(f)
 f.close()
 

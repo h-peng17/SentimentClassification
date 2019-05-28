@@ -24,6 +24,7 @@ class CNN(nn.Module):
         return sen_embedding
     
     def forward(self, x):
+        x = self.dropout(x)
         # x [B, N, E] -> [B, E, N]
         x = x.permute(0, 2, 1)
         # x [B, E, N] -> [B, H, N]
@@ -45,10 +46,12 @@ class RNN(nn.Module):
         self.dropout = nn.Dropout(config.drop_rate)
     
     def forward(self, x):
+        x = self.dropout(x)
         # x [B, N, E] -> [N, B, E]
         x = x.permute(1, 0, 2)
         # output [N, B, H], hidden [1, B, H]
         output, hidden = self.rnn(x)
         # [B, H]
         x = torch.squeeze(hidden[0])
+        x = self.dropout(x)
         return x

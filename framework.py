@@ -236,7 +236,7 @@ class Test():
                 pr_x_recall.append(correct / self.total_recall)
                 pr_y_precision.append(correct / (i + 1))
             auc = metrics.auc(x = pr_x_recall, y = pr_y_precision)
-            return auc
+            print("auc: {}".format(auc))
             
 
 parser = OptionParser()

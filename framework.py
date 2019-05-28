@@ -156,8 +156,8 @@ class Train():
                 self.train_model.train()
             else:
                 for i in range(int(len(train_order) / self.config.batch_size)):
-                    if epoch == 98:
-                        pdb.set_trace()
+                    # if epoch == 98:
+                    #     pdb.set_trace()
                     loss, _ = self.train_one_step(True)
                     sys.stdout.write("epoch:{} batch:{} loss:{}, acc:{}\r".format(epoch, i, round(float(loss), 6), round(self.correct / self.total, 6)))
                     sys.stdout.flush()
@@ -213,6 +213,8 @@ class Test():
             self.correct = 0
             self.total = 0 
             for i in range(int(len(test_order) / self.config.batch_size)):
+                if epoch == 98:
+                        pdb.set_trace()
                 logit = self.test_one_step()
                 sys.stdout.write("epoch:{}, batch:{} acc:{}\r".format(epoch, i, round(self.correct / self.total, 6)))
                 sys.stdout.flush()

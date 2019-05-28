@@ -99,10 +99,11 @@ class Train():
         self.train_model.cuda()
         self.train_model.train()
 
-        parameters_to_optimize = filter(lambda x:x.requires_grad, self.train_model.parameters())
+        print("wash parameters...")
+        parameters_to_optimize = filter(lambda x: x.requires_grad, self.train_model.parameters())
         self.optimizer = optim.SGD(parameters_to_optimize, lr = self.config.lr, weight_decay = self.config.weight_decay)
 
-        print("finish init...")
+        print("finish init")
 
     def to_var(self, x):
         return torch.from_numpy(x).to(torch.int64).cuda()

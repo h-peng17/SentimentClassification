@@ -253,7 +253,7 @@ if options.mode == 'train':
 
     test_data_loader = Data_loader("test", config)
     test = Test(test_data_loader, ckpt_dir, config)
-    test.init_test(Model(config))
+    test.init_test(Model(config, test_data_loader.weight_tabel))
     test.test()
 
 else:
@@ -262,6 +262,6 @@ else:
 
     test_data_loader = Data_loader("test", config)
     test = Test(test_data_loader, ckpt_dir, config)
-    test.init_test(Model(config))
+    test.init_test(Model(config, test_data_loader.weight_tabel))
     test.test()
 

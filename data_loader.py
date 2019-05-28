@@ -14,7 +14,7 @@ class Data_loader():
         self.rig = 0
         self.idx = 0
         
-        _weight_tabel = np.zeros(shape = (config.mod_total), dtype = np.float32)
+        _weight_tabel = np.zeros(shape = (config.mood_total), dtype = np.float32)
         for i in range(len(self.label)):
             _weight_tabel[self.label[i]] += 1.0
         print(_weight_tabel) 

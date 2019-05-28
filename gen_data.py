@@ -43,6 +43,7 @@ class Gendata():
         f = open("../original_data/sinanews.{}".format(mode), encoding = 'utf8')
         data_word = np.zeros(shape = [total, 240], dtype = np.int32)
         data_label = np.zeros(shape = [total], dtype = np.int32)
+        data_length = np.zeros(shape = [total], dtype = np.int32)
         for i in range(total):
             line = f.readline()
             art = line.strip().split('\t')
@@ -56,6 +57,7 @@ class Gendata():
                 except:
                     data_word[i][j] = self.word2id["UNK"]
             
+            data_length[i] = len(sen)
             mood_num = {}
             for mood in moods:
                 mood_num[mood[0:2]] = int(mood[3])
@@ -76,6 +78,7 @@ class Gendata():
 
         np.save("../data/{}_word.npy".format(mode), data_word)
         np.save("../data/{}_label.npy".format(mode), data_label)
+        np.save("../data/{}_length.npy".format(mode), data_length)
 
 if not os.path.exists("../data"):
     os.mkdir("../data")

@@ -101,7 +101,10 @@ class Train():
 
         print("wash parameters...")
         parameters_to_optimize = filter(lambda x: x.requires_grad, self.train_model.parameters())
-        self.optimizer = optim.Adam(parameters_to_optimize, lr = self.config.lr, weight_decay = self.config.weight_decay)
+        if optimizer == 'Adam':
+            self.optimizer = optim.Adam(parameters_to_optimize, lr = self.config.lr, weight_decay = self.config.weight_decay)
+        elif optimizer == 'SGD':
+            self.optimizer = optim.SGD(parameters_to_optimize, lr = self.config.lr, weight_decay = self.config.weight_decay)
 
         print("finish init")
 

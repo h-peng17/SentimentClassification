@@ -30,10 +30,10 @@ class CNN(nn.Module):
         x = x.permute(0, 2, 1)
         # x [B, E, N] -> [B, H, N]
         x = self.cnn1(x)
-        # x [B, H, N] -> [B, H2, N]
-        x = self.cnn2(x)
-        # x [B, H, N] -> [B, H2, N]
-        x = self.cnn3(x)
+        # # x [B, H, N] -> [B, H2, N]
+        # x = self.cnn2(x)
+        # # x [B, H, N] -> [B, H2, N]
+        # x = self.cnn3(x)
         #x [B, H2, N] -> [B, H2]
         x = self.max_pooling(x)
         x = self.activation(x)

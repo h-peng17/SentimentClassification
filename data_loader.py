@@ -18,7 +18,7 @@ class Data_loader():
         for i in range(len(self.label)):
             _weight_tabel[self.label[i]] += 1.0
         print(_weight_tabel) 
-        self.weight_tabel = 1 / (_weight_tabel ** 0.2)
+        self.weight_tabel = 1 / (_weight_tabel ** 0.1)
         print(self.weight_tabel)
  
     def next(self, batch_size):

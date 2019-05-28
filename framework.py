@@ -12,6 +12,7 @@ from classifier import Classifier
 from data_loader import Data_loader 
 from optparse import OptionParser
 import pdb
+import sklearn.metrics as metrics
 
 
 class Model(nn.Module):
@@ -38,10 +39,6 @@ class Model(nn.Module):
 
         return output, logit
 
-
-class Accuracy():
-    def __init__(self):
-        pass 
 
 class Config():
     def __init__(self, _config):
@@ -196,7 +193,7 @@ class Test():
         self.correct += (batch["label"] == output).sum()
         self.total += len(batch["label"])
 
-        return logit
+        return logit, batch["label"]
     
     def test(self):
         print("begin testing....")
@@ -212,12 +209,35 @@ class Test():
             self.test_model.load_state_dict(torch.load(path))
             self.correct = 0
             self.total = 0 
+            self.result = []
+            self.total_recall = 0
             for i in range(int(len(test_order) / self.config.batch_size)):
-                if epoch == 98:
-                        pdb.set_trace()
-                logit = self.test_one_step()
+                logit, label = self.test_one_step()
                 sys.stdout.write("epoch:{}, batch:{} acc:{}\r".format(epoch, i, round(self.correct / self.total, 6)))
                 sys.stdout.flush()
+
+                logit = np.array((logit.cpu()).detach())
+                logit = logit.tolist()
+                for i in range(len(logit)):
+                    for j in range(self.config.mood_total):
+                        if j == label[i]:
+                            self.result.append([logit[i][j], 1])
+                        else:
+                            self.result.append([logit[i][j], 0])
+                self.total_recall += len(logit)
+
+            self.result.sort(key = lambda x:x[0], reverse = True)
+            correct = 0
+            pr_x_recall = []
+            pr_y_precision = []
+            for i, item in enumerate(self.result):
+                if item[1] == 1:
+                    correct += 1
+                pr_x_recall.append(correct / self.total_recall)
+                pr_y_precision.append(correct / (i + 1))
+            auc = metrics.auc(x = pr_x_recall, y = pr_y_precision)
+            return auc
+            
 
 parser = OptionParser()
 parser.add_option('--model_name', dest='model_name',default='CNN',help='model name')

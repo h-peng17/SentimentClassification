@@ -50,5 +50,5 @@ class RNN(nn.Module):
         # output [N, B, H], hidden [1, B, H]
         output, hidden = self.rnn(x)
         # [B, H]
-        x = self.dropout(torch.squeeze(hidden[0]))
+        x = torch.squeeze(hidden[0])
         return x

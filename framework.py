@@ -45,10 +45,10 @@ class Config():
         self.word_total = _config["word_total"]
         self.sen_len = _config["sen_len"]
         self.mood_total = _config["mood_total"]
-        self.embedding_size = 300
-        self.hidden_size = 230
-        self.hidden_size2 = 230
-        self.kernel_size = 3
+        self.embedding_size = 100
+        self.hidden_size = 512
+        self.hidden_size2 = 512
+        self.kernel_size = 2
         self.drop_rate = 0.5 
         self.lr = 0.001
         self.optimizer = "SGD" 

@@ -19,7 +19,7 @@ class Data_loader():
             _weight_tabel[self.label[i]] += 1.0
         print(_weight_tabel) 
         self.weight_tabel = 1 / (_weight_tabel ** 0.05)
-        print(_weight_tabel)
+        print(self.weight_tabel)
  
     def next(self, batch_size):
         if self.idx >= self.total:

@@ -8,7 +8,7 @@ class Classifier(nn.Module):
         self.mood_matrix = nn.Embedding(config.mood_total, config.hidden_size)
         self.bias = nn.Parameter(torch.randn(config.mood_total))
         nn.init.xavier_uniform_(self.mood_matrix.weight)
-        nn.init.uniform_(self.mood.bias)
+        nn.init.uniform_(self.bias)
 
         self.config = config
         self.dropout = nn.Dropout(config.droprate)

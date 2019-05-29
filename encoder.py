@@ -26,7 +26,7 @@ class CNN(nn.Module):
     def attation(self, x):
         # x [B, N, E] -> [B, E, N]
         K = x.permute(0, 2, 1)
-        attention_x = (x * K / x.size(1) ** -0.5) * x 
+        attention_x = torch.matmul((torch.matmul(x, K)/ x.size(1) ** -0.5), x)
         return attention_x
         
  

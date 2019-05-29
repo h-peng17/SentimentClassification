@@ -4,6 +4,7 @@ import json
 import parser
 import numpy as np 
 import sys
+import pdb
 
 
 class Gendata():
@@ -100,6 +101,7 @@ class Gendata():
         data_length = np.zeros(shape = [total], dtype = np.int32)
         for i in range(total):
             line = f.readline()
+            pdb.set_trace()
             art = line.strip().split('\t')
             moods = art[1].split()[1:]
             sen = art[2].split()

@@ -165,11 +165,11 @@ class Train():
                     sys.stdout.write("epoch:{} batch:{} loss:{}, acc:{}\r".format(epoch, i, round(float(loss), 6), round(self.correct / self.total, 6)))
                     sys.stdout.flush()
                 
-                if epoch % self.config.save_epoch == 0:
-                    print('Epoch:{} has finished'.format(epoch))
-                    path = os.path.join(self.ckpt_dir, self.config.model_name + '-' + str(epoch))
-                    torch.save(self.train_model.state_dict(), path)
-                    print('Have saved model to ' + path)
+            if epoch % self.config.save_epoch == 0:
+                print('Epoch:{} has finished'.format(epoch))
+                path = os.path.join(self.ckpt_dir, self.config.model_name + '-' + str(epoch))
+                torch.save(self.train_model.state_dict(), path)
+                print('Have saved model to ' + path)
 
 class Test():
     def __init__(self, test_data_loader, ckpt_dir, config):
@@ -207,7 +207,7 @@ class Test():
             exit("wrong!!")
         test_order = self.test_data_loader.order
 
-        for epoch in range(2, self.config.max_epoch):
+        for epoch in range(0, self.config.max_epoch):
             path = os.path.join(self.ckpt_dir, self.config.model_name + '-' + str(epoch))
             if not os.path.exists(path):
                 continue

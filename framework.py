@@ -48,7 +48,7 @@ class Config():
         self.embedding_size = 100
         self.hidden_size = 512
         self.hidden_size2 = 512
-        self.kernel_size = 2
+        self.kernel_size = 3
         self.drop_rate = 0.5 
         self.lr = 0.001
         self.optimizer = "SGD" 

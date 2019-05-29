@@ -264,7 +264,7 @@ config.set_weight_decay(float(options.weight_decay))
 config.set_drop_rate(float(options.droprate))
 
 if options.mode == 'train':
-    train_data_loader = Data_loader("train", config)
+    train_data_loader = Data_loader("test", config)
     dev_data_loader = Data_loader("test", config)
     ckpt_dir = '../' + options.model_name + '-'+ options.lr + '-' + options.weight_decay + '-' + options.droprate
     print(ckpt_dir)

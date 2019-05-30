@@ -32,7 +32,7 @@ class CNN(nn.Module):
         
  
     def forward(self, x):
-        # x = self.dropout(x)
+        x = self.dropout(x)
         # x = self.attation(x)
         # x [B, N, E] -> [B, E, N]
         x = x.permute(0, 2, 1)

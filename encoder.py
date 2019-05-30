@@ -70,6 +70,7 @@ class ATT(nn.Module):
     def __init__(self, config):
         super(ATT, self).__init__()
         self.dropout = nn.Dropout(config.drop_rate)
+        self.linear = nn.Linear(config.embedding_size, config.hidden_size)
     
     def forward(self, x):
         # x [B, N, E]

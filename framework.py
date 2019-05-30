@@ -49,7 +49,6 @@ class Config():
         self.mood_total = _config["mood_total"]
         self.embedding_size = 50
         self.hidden_size = 230
-        self.hidden_size2 = 230
         self.kernel_size = 3
         self.drop_rate = 0.5 
         self.lr = 0.001
@@ -63,6 +62,9 @@ class Config():
     
     def set_batch_size(self, batch_size):
         self.batch_size = batch_size
+    
+    def set_hidden_size(self, hidden_size):
+        self.hidden_size = hidden_size
     
     def set_max_epoch(self, max_epoch):
         self.max_epoch = max_epoch
@@ -264,6 +266,7 @@ config.set_max_epoch(int(options.max_epoch))
 config.set_batch_size(int(options.batch_size))
 config.set_weight_decay(float(options.weight_decay))
 config.set_drop_rate(float(options.droprate))
+config.set_hidden_size(int(options.hs))
 
 if options.mode == 'train':
     train_data_loader = Data_loader("test", config)

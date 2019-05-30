@@ -241,7 +241,7 @@ parser.add_option('--model_name', dest='model_name',default='CNN',help='model na
 parser.add_option('--gpu', dest='gpu',default=5,help='gpu id for running')
 parser.add_option('--mode',dest='mode',default='train',help='to train or to test')
 parser.add_option('--lr',dest='lr',default=0.001,help='learning rate')
-parser.add_option('--hs',dest='hidden_size',default=230,help='hidden size')
+parser.add_option('--hs',dest='hs',default=230,help='hidden size')
 parser.add_option('--droprate',dest='droprate',default=0.7,help='keep rate')
 parser.add_option('--weight_decay',dest='weight_decay',default=1e-5,help='keep rate')
 parser.add_option('--max_epoch',dest='max_epoch',default=20,help='max epoch')

@@ -65,3 +65,14 @@ class RNN(nn.Module):
         x = torch.squeeze(hidden[0])
         x = self.dropout(x)
         return x
+        
+class ATT(nn.Module):
+    def __init__(self, config):
+        super(ATT, self).__init__()
+    
+    def forward(self, x):
+        # x [B, N, E]
+        K = x.permute(0, 2, 1)
+        attention_x = torch.matmul((torch.matmul(x, K)/ x.size(1) ** -0.5), x)
+        attention_x = self.dropout(attention_x)
+        return attention_x

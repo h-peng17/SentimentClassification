@@ -69,6 +69,7 @@ class RNN(nn.Module):
 class ATT(nn.Module):
     def __init__(self, config):
         super(ATT, self).__init__()
+        self.dropout = nn.Dropout(config.drop_rate)
     
     def forward(self, x):
         # x [B, N, E]

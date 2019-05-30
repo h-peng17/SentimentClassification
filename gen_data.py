@@ -118,6 +118,7 @@ class Gendata():
             for mood in moods:
                 mood_num[mood[0:2]] = int(mood[3])
             
+            pdb.set_trace()
             mood_key = ''
             num = 0
             for key in mood_num:

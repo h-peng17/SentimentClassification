@@ -116,8 +116,9 @@ class Gendata():
             data_length[i] = len(sen)
             mood_num = {}
             for mood in moods:
-                mood_num[mood[0:2]] = int(mood[3])
-            
+                moo = mood.split(":")
+                mood_num[moo[0]] = int(moo[1])
+                
             pdb.set_trace()
             mood_key = ''
             num = 0

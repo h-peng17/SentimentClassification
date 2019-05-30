@@ -57,7 +57,7 @@ class RNN(nn.Module):
         self.dropout = nn.Dropout(config.drop_rate)
     
     def forward(self, x):
-        # x = self.dropout(x)
+        x = self.dropout(x)
         # x [B, N, E] -> [N, B, E]
         x = x.permute(1, 0, 2)
         # output [N, B, H], hidden [1, B, H]

@@ -125,6 +125,7 @@ class Gendata():
                 if mood_num[key] > num:
                     num = mood_num[key]
                     mood_key = key 
+            pdb.set_trace()
             data_label[i] = self.mood2id[mood_key]
                     
 

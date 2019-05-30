@@ -119,14 +119,14 @@ class Gendata():
                 moo = mood.split(":")
                 mood_num[moo[0]] = int(moo[1])
                 
-            pdb.set_trace()
+            # pdb.set_trace()
             mood_key = ''
             num = 0
             for key in mood_num:
                 if mood_num[key] > num:
                     num = mood_num[key]
                     mood_key = key 
-            pdb.set_trace()
+            # pdb.set_trace()
             data_label[i] = self.mood2id[mood_key]
                     
 

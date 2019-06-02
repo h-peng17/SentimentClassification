@@ -103,7 +103,7 @@ class Gendata():
 
         for i in range(total):
             line = f.readline()
-            # # # # # # pdb.set_trace()
+            # pdb.set_trace()
             art = line.strip().split('\t')
             mood_all = int(art[1].split()[0].split(":")[-1])
             moods = art[1].split()[1:]
@@ -122,10 +122,10 @@ class Gendata():
                 moo = mood.split(":")
                 mood_num[moo[0]] = int(moo[1])
             
+            pdb.set_trace()
             for key in mood_num:
                 data_dis[self.mood2id[key]][i] = mood_num[key] / mood_all 
 
-            # pdb.set_trace()
             mood_key = ''
             num = 0
             for key in mood_num:

@@ -31,8 +31,9 @@ class CNN(nn.Module):
         
     def forward(self, x):
         x = self.dropout(x)
-        attention_x = self.attention(x)
-        x = torch.cat((x, attention_x), dim = 2)
+        if self.config.use_att != 0:
+            attention_x = self.attention(x)
+            x = torch.cat((x, attention_x), dim = 2)
         # x [B, N, E] -> [B, E, N]
         x = x.permute(0, 2, 1)
         # x [B, E, N] -> [B, H, N]

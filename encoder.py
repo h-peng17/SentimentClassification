@@ -47,13 +47,24 @@ class CNN(nn.Module):
 class RNN(nn.Module):
     def __init__(self, config):
         super(RNN, self).__init__()
-        self.input_size = config.embedding_size
+        self.input_size = config.embedding_size if config.use_att == 0 else config.embedding_size * 2
         self.hidden_size = config.hidden_size
         self.rnn = nn.LSTM(input_size = self.input_size, hidden_size = self.hidden_size)
         self.dropout = nn.Dropout(config.drop_rate)
+        self.softmax = nn.Softmax(dim = 2)
     
+    def attention(self, x):
+        # x [B, N, E]
+        K = x.permute(0, 2, 1)
+        # x [B, N, E]
+        attention_x = torch.matmul(self.softmax(torch.matmul(x, K)/ x.size(1) ** -0.5), x)
+        return attention_x
+
     def forward(self, x):
         x = self.dropout(x)
+        if self.config.use_att != 0:
+            attention_x = self.attention(x)
+            x = torch.cat((x, attention_x), dim = 2)
         # x [B, N, E] -> [N, B, E]
         x = x.permute(1, 0, 2)
         # output [N, B, H], hidden [1, B, H]

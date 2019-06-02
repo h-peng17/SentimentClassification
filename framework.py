@@ -215,6 +215,7 @@ class Test():
             exit("wrong!!")
         test_order = self.test_data_loader.order
         best_f1 = 0
+        best_acc = 0
         for epoch in range(0, self.config.max_epoch):
             path = os.path.join(self.ckpt_dir, self.config.model_name + '-' + str(epoch))
             if not os.path.exists(path):
@@ -232,20 +233,19 @@ class Test():
                 self.result.extend(output)
                 self.label.extend(label.tolist())
             
+            best_acc = best_acc if self.correct / self.total <= best_acc else self.correct / self.total
             f1 = metrics.f1_score(self.label, self.result, average='macro')
             print("F1: {}".format(f1))
             if f1 > best_f1:
                 best_f1 = f1 
         f = open("../res/{}".format(self.config.model_name), 'a+')
-        data = "F1: {}, the paras are embedding_size: {}, hidden_size: {}, learn_rate: {}, droprate: {}, batch_size: {}\n".format(\
-                    best_f1, self.config.embedding_size, self.config.hidden_size, self.config.lr, self.config.drop_rate, self.config.batch_size)
+        data = "Acc: {}F1: {}, the paras are embedding_size: {}, hidden_size: {}, learn_rate: {}, droprate: {}, batch_size: {}\n".format(\
+                   best_acc , best_f1, self.config.embedding_size, self.config.hidden_size, self.config.lr, self.config.drop_rate, self.config.batch_size)
         f.write(data)
         f.close()
 
 
-
-            
-
+# the main function
 parser = OptionParser()
 parser.add_option('--model_name', dest='model_name',default='CNN',help='model name')
 parser.add_option('--gpu', dest='gpu',default=5,help='gpu id for running')

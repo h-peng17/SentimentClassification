@@ -177,7 +177,8 @@ class Train():
             if epoch % self.config.save_epoch == 0:
                 path = os.path.join(self.ckpt_dir, self.config.model_name + '-' + str(epoch))
                 torch.save(self.train_model.state_dict(), path)
-                print('Have saved model to ' + path + '\r')
+                print('Have saved model to ' + path)
+                print("\n")
 
 class Test():
     def __init__(self, test_data_loader, ckpt_dir, config):
@@ -235,7 +236,8 @@ class Test():
             print("epoch:{}, acc:{}\r".format(epoch, round(self.correct / self.total, 6)))
             best_acc = best_acc if self.correct / self.total <= best_acc else self.correct / self.total
             f1 = metrics.f1_score(self.label, self.result, average='macro')
-            print("F1: {}\r\r".format(f1))
+            print("F1: {}".format(f1))
+            print("\n")
             if f1 > best_f1:
                 best_f1 = f1 
         f = open("../res/{}".format(self.config.model_name), 'a+')

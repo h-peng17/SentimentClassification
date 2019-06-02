@@ -11,8 +11,7 @@ class CNN(nn.Module):
         self.out_channels = config.hidden_size
         self.kernel_size = config.kernel_size
         self.cnn = nn.Conv1d(self.in_channels, self.out_channels, self.kernel_size, padding = int((self.kernel_size-1) / 2))
-        nn.init.xavier_normal_(self.cnn1.weight)
-        nn.init.xavier_normal_(self.cnn2.weight)
+        nn.init.xavier_normal_(self.cnn.weight)
         self.activation = nn.ReLU()
         self.config = config 
         self.dropout = nn.Dropout(config.drop_rate)

@@ -248,7 +248,7 @@ class Test():
             print(" ")
             if f1 > best_f1:
                 best_f1 = f1 
-            pdb.set_trace()
+            # pdb.set_trace()
             for i in range(8):
                 a = pearsonr(data_dis[i].tolist(), self.test_data_loader.dis[i].tolist())
                 if a[0] > cov_max[i]:

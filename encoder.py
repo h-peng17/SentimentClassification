@@ -15,6 +15,7 @@ class CNN(nn.Module):
         self.activation = nn.ReLU()
         self.config = config 
         self.dropout = nn.Dropout(config.drop_rate)
+        self.softmax = nn.Softmax(dim = 2)
 
     def max_pooling(self, x):
         # x [B, H, N] -> [B, H]

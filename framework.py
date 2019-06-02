@@ -23,6 +23,8 @@ class Model(nn.Module):
             self.encoder = CNN(config)
         elif config.model_name == 'RNN':
             self.encoder = RNN(config)
+        elif config.model_name == 'MLP':
+            self.encoder = MLP(config)
         elif config.model_name == 'ATT':
             self.encoder = ATT(config)
         self.classifier = Classifier(config, weight_tabel)

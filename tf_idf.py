@@ -2,8 +2,10 @@
 
 import json
 import re
+import numpy as np
 import jieba.analyse as analyse
 tfidf = analyse.extract_tags
+
 
 
 word2id = {}

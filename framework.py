@@ -250,7 +250,7 @@ class Test():
                 best_f1 = f1 
             pdb.set_trace()
             for i in range(8):
-                a = pearsonr(data_dis[i], self.test_data_loader.dis[i])
+                a = pearsonr(data_dis[i].tolist(), self.test_data_loader.dis[i].tolist())
                 if a > cov_max[i]:
                     cov_max[i] = a
 

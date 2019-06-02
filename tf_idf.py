@@ -50,9 +50,9 @@ def process_data(mode):
             if j >= 200:
                 break
             try:
-                data_word[i][j] = self.word2id[word]
+                data_word[i][j] = word2id[word]
             except:
-                data_word[i][j] = self.word2id["UNK"]
+                data_word[i][j] = word2id["UNK"]
         
     np.save("../data/{}_word.npy".format(mode), data_word)
 

@@ -165,14 +165,15 @@ class Train():
                     _, logit = self.train_one_step(False)
                     sys.stdout.write('dev acc:{}\r'.format(round(self.correct / self.total, 6)))
                     sys.stdout.flush()
+                print('dev acc:{}\r'.format(round(self.correct / self.total, 6)))
                 
                 self.train_model.train()
             else:
                 for i in range(int(len(train_order) / self.config.batch_size)):
                     loss, _ = self.train_one_step(True)
-                    sys.stdout.write("epoch:{} batch:{} loss:{}, acc:{}\r".format(epoch, i, round(float(loss), 6), round(self.correct / self.total, 6)))
+                    sys.stdout.write("epoch:{} loss:{}, acc:{}\r".format(epoch, round(float(loss), 6), round(self.correct / self.total, 6)))
                     sys.stdout.flush()
-                print("\r")
+                print("epoch:{} loss:{}, acc:{}\r".format(epoch, round(float(loss), 6), round(self.correct / self.total, 6)))
             if epoch % self.config.save_epoch == 0:
                 print('Epoch:{} has finished'.format(epoch))
                 path = os.path.join(self.ckpt_dir, self.config.model_name + '-' + str(epoch))

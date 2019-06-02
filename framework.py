@@ -21,7 +21,7 @@ class Model(nn.Module):
         self.embedding = Embedding(config)
         if config.model_name == "CNN" or config.model_name == "CNN_ATT":
             self.encoder = CNN(config)
-        elif config.model_name == 'RNN':
+        elif config.model_name == 'RNN' or config.model_name == "RNN_ATT":
             self.encoder = RNN(config)
         elif config.model_name == 'MLP':
             self.encoder = MLP(config)

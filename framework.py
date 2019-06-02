@@ -172,7 +172,7 @@ class Train():
                     loss, _ = self.train_one_step(True)
                     sys.stdout.write("epoch:{} batch:{} loss:{}, acc:{}\r".format(epoch, i, round(float(loss), 6), round(self.correct / self.total, 6)))
                     sys.stdout.flush()
-                
+                print("\r")
             if epoch % self.config.save_epoch == 0:
                 print('Epoch:{} has finished'.format(epoch))
                 path = os.path.join(self.ckpt_dir, self.config.model_name + '-' + str(epoch))

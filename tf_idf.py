@@ -21,7 +21,7 @@ while True:
     for word in sen:
         words += word
         
-    keywords = tfidf(words, topK = 100)
+    keywords = tfidf(words, topK = 200)
     for word in keywords:
         if word not in word2id:
             word2id[word] = len(word2id)

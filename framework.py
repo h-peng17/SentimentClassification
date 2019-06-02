@@ -258,7 +258,6 @@ parser.add_option('--max_epoch',dest='max_epoch',default=20,help='max epoch')
 parser.add_option('--optimer',dest='optimer',default='SGD',help='optimizer for training')
 parser.add_option('--dev_step',dest='dev_step',default=5,help='steps for dev')
 parser.add_option('--batch_size',dest='batch_size',default=64,help='batch size')
-parser.add_option('--use_att',dest='use_att',default=0,help='use ATT or not')
 (options, args) =parser.parse_args()
 
 os.environ["CUDA_VISIBLE_DEVICES"] = str(options.gpu)
@@ -278,7 +277,7 @@ config.set_batch_size(int(options.batch_size))
 config.set_weight_decay(float(options.weight_decay))
 config.set_drop_rate(float(options.droprate))
 config.set_hidden_size(int(options.hs))
-config.set_use_att(int(options.use_att))
+config.set_use_att(0 if options.model_name[-3:] != 'ATT' else 1)
 
 if not os.path.exists("../res"):
     os.mkdir("../res")

@@ -7,7 +7,7 @@ import torch.optim as optim
 import numpy as np 
 import sys 
 from embedding import Embedding
-from encoder import CNN, RNN, ATT
+from encoder import CNN, RNN, ATT, MLP
 from classifier import Classifier
 from data_loader import Data_loader 
 from optparse import OptionParser

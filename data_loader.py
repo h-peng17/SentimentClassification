@@ -7,6 +7,7 @@ class Data_loader():
     def __init__(self, mode, config):
         self.word = np.load("../data/{}_word.npy".format(mode))
         self.label = np.load("../data/{}_label.npy".format(mode))
+        self.dis = np.load("../data/{}_dis.npy".format(mode))
 
         self.total = len(self.word)
         self.order = list(range(self.total))

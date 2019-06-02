@@ -52,6 +52,7 @@ class RNN(nn.Module):
         self.rnn = nn.LSTM(input_size = self.input_size, hidden_size = self.hidden_size)
         self.dropout = nn.Dropout(config.drop_rate)
         self.softmax = nn.Softmax(dim = 2)
+        self.config = config
     
     def attention(self, x):
         # x [B, N, E]

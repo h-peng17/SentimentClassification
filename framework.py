@@ -13,7 +13,7 @@ from data_loader import Data_loader
 from optparse import OptionParser
 import pdb
 import sklearn.metrics as metrics
-
+import time 
 
 class Model(nn.Module):
     def __init__(self, config, weight_tabel = None):
@@ -151,6 +151,7 @@ class Train():
     
     def train(self):
         print("begin training....")
+        begin_time = time.time()
         if not os.path.exists(self.ckpt_dir):
             os.mkdir(self.ckpt_dir)
         train_order = self.train_data_loader.order
@@ -179,6 +180,7 @@ class Train():
                 torch.save(self.train_model.state_dict(), path)
                 print('Have saved model to ' + path)
                 print(" ")
+        print("Training is done, using {}s".format(time.time() - begin_time))
 
 class Test():
     def __init__(self, test_data_loader, ckpt_dir, config):
@@ -293,11 +295,6 @@ if options.mode == 'train':
     train = Train(train_data_loader, dev_data_loader, ckpt_dir, config)
     train.init_train(Model(config, train_data_loader.weight_tabel), options.optimer)
     train.train()
-
-    test_data_loader = Data_loader("train", config)
-    test = Test(test_data_loader, ckpt_dir, config)
-    test.init_test(Model(config, test_data_loader.weight_tabel))
-    test.test()
 
 else:
     ckpt_dir = '../' + options.model_name + '-'+ str(options.lr) + '-' + str(options.weight_decay) + '-' + str(options.droprate)

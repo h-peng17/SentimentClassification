@@ -19,7 +19,7 @@ class Model(nn.Module):
     def __init__(self, config, weight_tabel = None):
         super(Model, self).__init__()
         self.embedding = Embedding(config)
-        if config.model_name == "CNN":
+        if config.model_name == "CNN" or config.model_name == "CNN_ATT":
             self.encoder = CNN(config)
         elif config.model_name == 'RNN':
             self.encoder = RNN(config)
@@ -232,7 +232,7 @@ class Test():
                 self.result.extend(output)
                 self.label.extend(label.tolist())
             
-            f1 = metrics.f1_score(self.label, self.result, average='micro')
+            f1 = metrics.f1_score(self.label, self.result, average='macro')
             print("F1: {}".format(f1))
             if f1 > best_f1:
                 best_f1 = f1 

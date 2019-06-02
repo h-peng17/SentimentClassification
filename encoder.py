@@ -30,7 +30,6 @@ class CNN(nn.Module):
         attention_x = torch.matmul((torch.matmul(x, K)/ x.size(1) ** -0.5), x)
         return attention_x
         
- 
     def forward(self, x):
         x = self.dropout(x)
         # x = self.attation(x)
@@ -67,11 +66,24 @@ class RNN(nn.Module):
         x = self.dropout(x)
         return x
         
+class MLP(nn.Module):
+    def __init__(self, config):
+        super(MLP, self).__init__()
+        self.dropout = nn.Dropout(config.drop_rate)
+        self.linear = nn.Linear(config.embedding_size, config.hidden_size)
+    
+    def forward(self, x):
+        # mean the x -> [B, E] 
+        x = torch.mean(x, 1)
+        x = self.dropout(x)
+        return x
+
 class ATT(nn.Module):
     def __init__(self, config):
         super(ATT, self).__init__()
         self.dropout = nn.Dropout(config.drop_rate)
         self.linear = nn.Linear(config.embedding_size, config.hidden_size)
+
     def self_att(self, x):
         # x [B, N, E]
         K = x.permute(0, 2, 1)
@@ -80,7 +92,8 @@ class ATT(nn.Module):
         return attention_x
     
     def forward(self, x):
-        # mean the x -> [B, E] 
-        x = torch.mean(x, 1)
+        # x (B, N, E)
+        attention_x = self.self_att(x)
+        x = torch.mean(attention_x, 1)
         x = self.dropout(x)
-        return x
+        return  x

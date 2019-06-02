@@ -21,7 +21,7 @@ class CNN(nn.Module):
         sen_embedding, _ = torch.max(x, dim = 2)
         return sen_embedding
     
-    def self_att(self, x):
+    def attention(self, x):
         # x [B, N, E]
         K = x.permute(0, 2, 1)
         # x [B, N, E]
@@ -30,7 +30,7 @@ class CNN(nn.Module):
         
     def forward(self, x):
         x = self.dropout(x)
-        x = self.attation(x)
+        x = self.attention(x)
         # x [B, N, E] -> [B, E, N]
         x = x.permute(0, 2, 1)
         # x [B, E, N] -> [B, H, N]

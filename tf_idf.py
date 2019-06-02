@@ -27,7 +27,7 @@ while True:
 
 print("Finish word2id...")
 
-def process_data(self, mode):
+def process_data(mode):
     f = open("../original_data/sinanews.{}".format(mode), encoding = 'utf8')
     total = 0
     while True:

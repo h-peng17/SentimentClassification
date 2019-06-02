@@ -7,7 +7,6 @@ import jieba.analyse as analyse
 tfidf = analyse.extract_tags
 
 
-
 word2id = {}
 word2id["BLK"] = 0
 word2id["UNK"] = 1
@@ -44,7 +43,6 @@ def process_data(mode):
         line = f.readline()
         # # # # # # pdb.set_trace()
         art = line.strip().split('\t')
-        moods = art[1].split()[1:]
         sen = art[2].split()
         for j, word in enumerate(sen):
             if j >= 200:
@@ -53,7 +51,11 @@ def process_data(mode):
                 data_word[i][j] = word2id[word]
             except:
                 data_word[i][j] = word2id["UNK"]
-        
+    # save data 
+    f = open("../data/config.json", 'w')
+    json.dump({"word_total":len(word2id), "mood_total": 8, "sen_len": 200}, f)
+    f.close()
+
     np.save("../data/{}_word.npy".format(mode), data_word)
 
 process_data("train")

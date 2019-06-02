@@ -271,7 +271,7 @@ config.set_hidden_size(int(options.hs))
 if options.mode == 'train':
     train_data_loader = Data_loader("test", config)
     dev_data_loader = Data_loader("train", config)
-    ckpt_dir = '../' + options.model_name + '-'+ options.lr + '-' + options.weight_decay + '-' + options.droprate
+    ckpt_dir = '../' + options.model_name + '-'+ str(options.lr) + '-' + str(options.weight_decay) + '-' + str(options.droprate)
     print(ckpt_dir)
 
     train = Train(train_data_loader, dev_data_loader, ckpt_dir, config)
@@ -284,7 +284,7 @@ if options.mode == 'train':
     test.test()
 
 else:
-    ckpt_dir = '../' + options.model_name + '-'+ options.lr + '-' + options.weight_decay + '-' + options.droprate
+    ckpt_dir = '../' + options.model_name + '-'+ str(options.lr) + '-' + str(options.weight_decay) + '-' + str(options.droprate)
     print(ckpt_dir)
 
     test_data_loader = Data_loader("test", config)

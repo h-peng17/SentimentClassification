@@ -99,10 +99,13 @@ class Gendata():
         data_word = np.zeros(shape = [total, self.MAX], dtype = np.int32)
         data_label = np.zeros(shape = [total], dtype = np.int32)
         data_length = np.zeros(shape = [total], dtype = np.int32)
+        data_dis = np.zeros(shape = [len(self.mood2id), total], dtype = np.float32)
+
         for i in range(total):
             line = f.readline()
             # # # # # # pdb.set_trace()
             art = line.strip().split('\t')
+            mood_all = int(art[1].split()[0].split(":")[-1])
             moods = art[1].split()[1:]
             sen = art[2].split()
             for j, word in enumerate(sen):
@@ -118,7 +121,10 @@ class Gendata():
             for mood in moods:
                 moo = mood.split(":")
                 mood_num[moo[0]] = int(moo[1])
-                
+            
+            for key in mood_num:
+                data_dis[self.mood2id[key]][i] = mood_num[key] / mood_all 
+
             # pdb.set_trace()
             mood_key = ''
             num = 0
@@ -138,6 +144,7 @@ class Gendata():
         np.save("../data/{}_word.npy".format(mode), data_word)
         np.save("../data/{}_label.npy".format(mode), data_label)
         np.save("../data/{}_length.npy".format(mode), data_length)
+        np.save("../data/{}_dis.npy".format(mode), data_dis)
 
 if not os.path.exists("../data"):
     os.mkdir("../data")

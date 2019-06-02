@@ -14,6 +14,7 @@ from optparse import OptionParser
 import pdb
 import sklearn.metrics as metrics
 import time 
+from scipy.stats import pearsonr
 
 class Model(nn.Module):
     def __init__(self, config, weight_tabel = None):
@@ -210,7 +211,7 @@ class Test():
         self.correct += (batch["label"] == output).sum()
         self.total += len(batch["label"])
 
-        return batch["label"], output
+        return batch["label"], output, logit
     
     def test(self):
         print("begin testing....")
@@ -229,8 +230,13 @@ class Test():
             self.total = 0 
             self.result = []
             self.label = []
+            cov_max = np.zeros(shape = [8])
+            data_dis = np.zeros(shape = [8, len(test_order)], dtype = np.float32)
             for i in range(int(len(test_order) / self.config.batch_size)):
-                label, output = self.test_one_step()
+                label, output, logit = self.test_one_step()
+                logit = np.array(((torch.transpose(logit, 0, 1).cpu()).detach()))
+                data_dis[:, i] = logit[:, 0]
+
                 sys.stdout.write("epoch:{}, acc:{}\r".format(epoch, round(self.correct / self.total, 6)))
                 sys.stdout.flush()
                 self.result.extend(output)
@@ -242,6 +248,13 @@ class Test():
             print(" ")
             if f1 > best_f1:
                 best_f1 = f1 
+            for i in range(8):
+                a = pearsonr(data_dis[i], self.test_data_loader.dis[i])
+                if a > cov_max[i]:
+                    cov_max[i] = a
+
+
+        print(cov_max)
         f = open("../res/{}".format(self.config.model_name), 'a+')
         data = "Acc: {}F1: {}, the paras are embedding_size: {}, hidden_size: {}, learn_rate: {}, droprate: {}, batch_size: {}\n".format(\
                    best_acc , best_f1, self.config.embedding_size, self.config.hidden_size, self.config.lr, self.config.drop_rate, self.config.batch_size)

@@ -7,7 +7,7 @@ import numpy as np
 class CNN(nn.Module):
     def __init__(self, config):
         super(CNN, self).__init__()
-        self.in_channels = config.embedding_size
+        self.in_channels = config.embedding_size if config.use_att == 0 else config.embedding_size * 2
         self.out_channels = config.hidden_size
         self.kernel_size = config.kernel_size
         self.cnn = nn.Conv1d(self.in_channels, self.out_channels, self.kernel_size, padding = int((self.kernel_size-1) / 2))
@@ -31,7 +31,8 @@ class CNN(nn.Module):
         
     def forward(self, x):
         x = self.dropout(x)
-        x = self.attention(x)
+        attention_x = self.attention(x)
+        x = torch.cat((x, attention_x), dim = 2)
         # x [B, N, E] -> [B, E, N]
         x = x.permute(0, 2, 1)
         # x [B, E, N] -> [B, H, N]

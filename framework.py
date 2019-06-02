@@ -61,6 +61,7 @@ class Config():
         self.batch_size = 20
         self.save_epoch = 1
         self.model_name = "CNN"
+        self.use_att = 0
     
     def set_batch_size(self, batch_size):
         self.batch_size = batch_size
@@ -85,6 +86,9 @@ class Config():
     
     def set_drop_rate(self, drop_rate):
         self.drop_rate = drop_rate
+    
+    def set_use_att(self, use_att):
+        self.use_att = use_att
 
 
 
@@ -165,8 +169,6 @@ class Train():
                 self.train_model.train()
             else:
                 for i in range(int(len(train_order) / self.config.batch_size)):
-                    # if epoch == 98:
-                    #     pdb.set_trace()
                     loss, _ = self.train_one_step(True)
                     sys.stdout.write("epoch:{} batch:{} loss:{}, acc:{}\r".format(epoch, i, round(float(loss), 6), round(self.correct / self.total, 6)))
                     sys.stdout.flush()
@@ -212,7 +214,7 @@ class Test():
         if not os.path.exists(self.ckpt_dir):
             exit("wrong!!")
         test_order = self.test_data_loader.order
-
+        best_f1 = 0
         for epoch in range(0, self.config.max_epoch):
             path = os.path.join(self.ckpt_dir, self.config.model_name + '-' + str(epoch))
             if not os.path.exists(path):
@@ -230,9 +232,15 @@ class Test():
                 self.result.extend(output)
                 self.label.extend(label.tolist())
             
-        
             f1 = metrics.f1_score(self.label, self.result, average='micro')
             print("F1: {}".format(f1))
+            if f1 > best_f1:
+                best_f1 = f1 
+        f = open("../res/{}".format(self.config.model_name), 'a+')
+        data = "F1: {}, the paras are embedding_size: {}, hidden_size: {}, learn_rate: {}, droprate: {}, batch_size: {}\n".format(\
+                    best_f1, self.config.embedding_size, self.config.hidden_size, self.config.lr, self.config.drop_rate, self.config.batch_size)
+        f.write(data)
+        f.close()
 
 
 
@@ -250,6 +258,7 @@ parser.add_option('--max_epoch',dest='max_epoch',default=20,help='max epoch')
 parser.add_option('--optimer',dest='optimer',default='SGD',help='optimizer for training')
 parser.add_option('--dev_step',dest='dev_step',default=5,help='steps for dev')
 parser.add_option('--batch_size',dest='batch_size',default=64,help='batch size')
+parser.add_option('--use_att',dest='use_att',default=0,help='use ATT or not')
 (options, args) =parser.parse_args()
 
 os.environ["CUDA_VISIBLE_DEVICES"] = str(options.gpu)
@@ -269,6 +278,7 @@ config.set_batch_size(int(options.batch_size))
 config.set_weight_decay(float(options.weight_decay))
 config.set_drop_rate(float(options.droprate))
 config.set_hidden_size(int(options.hs))
+config.set_use_att(int(options.use_att))
 
 if not os.path.exists("../res"):
     os.mkdir("../res")

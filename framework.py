@@ -175,10 +175,9 @@ class Train():
                     sys.stdout.flush()
                 print("epoch:{} loss:{}, acc:{}\r".format(epoch, round(float(loss), 6), round(self.correct / self.total, 6)))
             if epoch % self.config.save_epoch == 0:
-                print('Epoch:{} has finished'.format(epoch))
                 path = os.path.join(self.ckpt_dir, self.config.model_name + '-' + str(epoch))
                 torch.save(self.train_model.state_dict(), path)
-                print('Have saved model to ' + path)
+                print('Have saved model to ' + path + '\r')
 
 class Test():
     def __init__(self, test_data_loader, ckpt_dir, config):
@@ -229,14 +228,14 @@ class Test():
             self.label = []
             for i in range(int(len(test_order) / self.config.batch_size)):
                 label, output = self.test_one_step()
-                sys.stdout.write("epoch:{}, batch:{} acc:{}\r".format(epoch, i, round(self.correct / self.total, 6)))
+                sys.stdout.write("epoch:{}, acc:{}\r".format(epoch, round(self.correct / self.total, 6)))
                 sys.stdout.flush()
                 self.result.extend(output)
                 self.label.extend(label.tolist())
-            
+            print("epoch:{}, acc:{}\r".format(epoch, round(self.correct / self.total, 6)))
             best_acc = best_acc if self.correct / self.total <= best_acc else self.correct / self.total
             f1 = metrics.f1_score(self.label, self.result, average='macro')
-            print("F1: {}".format(f1))
+            print("F1: {}\r\r".format(f1))
             if f1 > best_f1:
                 best_f1 = f1 
         f = open("../res/{}".format(self.config.model_name), 'a+')

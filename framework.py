@@ -270,6 +270,9 @@ config.set_weight_decay(float(options.weight_decay))
 config.set_drop_rate(float(options.droprate))
 config.set_hidden_size(int(options.hs))
 
+if not os.path.exists("../res"):
+    os.mkdir("../res")
+
 if options.mode == 'train':
     train_data_loader = Data_loader("test", config)
     dev_data_loader = Data_loader("train", config)

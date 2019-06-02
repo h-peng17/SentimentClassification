@@ -287,8 +287,8 @@ if not os.path.exists("../res"):
     os.mkdir("../res")
 
 if options.mode == 'train':
-    train_data_loader = Data_loader("test", config)
-    dev_data_loader = Data_loader("train", config)
+    train_data_loader = Data_loader("train", config)
+    dev_data_loader = Data_loader("test", config)
     ckpt_dir = '../' + options.model_name + '-'+ str(options.lr) + '-' + str(options.weight_decay) + '-' + str(options.droprate)
     print(ckpt_dir)
 

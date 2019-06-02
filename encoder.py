@@ -83,12 +83,13 @@ class ATT(nn.Module):
         super(ATT, self).__init__()
         self.dropout = nn.Dropout(config.drop_rate)
         self.linear = nn.Linear(config.embedding_size, config.hidden_size)
+        self.softmax = nn.Softmax(dim = 2)
 
     def self_att(self, x):
         # x [B, N, E]
         K = x.permute(0, 2, 1)
         # x [B, N, E]
-        attention_x = torch.matmul((torch.matmul(x, K)/ x.size(1) ** -0.5), x)
+        attention_x = torch.matmul(self.softmax(torch.matmul(x, K)/ x.size(1) ** -0.5), x)
         return attention_x
     
     def forward(self, x):
